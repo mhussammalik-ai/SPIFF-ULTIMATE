@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeonGrid - Pulse</title>
+<link rel="icon" type="image/png" href="./170ba712-048d-4b28-9853-f7a60df06289-md.jpeg">>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="index.html" class="logo-link">SPIFF ULTIMATE</a>
+  <ul class="nav-menu">
+    <li><a href="nexus.html">Nexus</a></li>
+    <li><a href="vault.html">Vault</a></li>
+    <li><a href="arena.html">Arena</a></li>
+    <li><a href="questline.html">Questline</a></li>
+    <li><a href="echoes.html">Echoes</a></li>
+    <li><a href="pulse.html" class="active">Pulse</a></li>
+    <li><a href="signa.html">Signa</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- PULSE CONTENT -->
+<section class="pulse">
+  <h2 class="pulse-title">PULSE</h2>
+  <p class="pulse-sub">Live Cyber News • City Reports • Game Updates</p>
+
+  <div class="pulse-feed" id="pulseFeed">
+    <div class="pulse-item">[08:12] 🚨 Cyberstorm District: Hackers infiltrate local AI network.</div>
+    <div class="pulse-item">[08:35] 📰 Tech Log: Experimental drones deployed over Neon Market.</div>
+    <div class="pulse-item">[09:01] 🎮 Game Alert: Shadow Run quest unlocked in sector 7.</div>
+    <div class="pulse-item">[09:22] 🌐 Network Update: Server latency reduced by 15%.</div>
+    <div class="pulse-item">[09:45] 💡 Urban Insight: Holographic murals light up the city.</div>
+  </div>
+</section>
+
+<style>
+/* ===== COLOR SYSTEM ===== */
+:root{
+  --neon:#2dffb3;
+  --neon-soft:rgba(45,255,179,.45);
+  --bg-dark:#05080f;
+  --bg-mid:#070d1a;
+}
+
+
+:root{
+  --neon:#2dffb3;
+  --neon-soft:rgba(45,255,179,0.4);
+  --bg-dark:#05080f;
+  --bg-mid:#070d1a;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:#05080f}
+::-webkit-scrollbar-thumb{
+  background:linear-gradient(to bottom,#2dffb3,#3ddcff);
+  border-radius:10px
+}
+/* ===== RESET ===== */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Orbitron",Arial,sans-serif;
+}
+
+/* ===== BODY ===== */
+body{
+  background:
+    radial-gradient(circle at top,#0b1a2f,var(--bg-dark)),
+    linear-gradient(135deg,var(--bg-mid),#000);
+  color:var(--neon);
+  overflow-x:hidden;
+}
+
+/* ===== NAVBAR ===== */
+nav{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:80px;
+  background:linear-gradient(90deg,#050912,#070c16,#050912);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 40px;
+  z-index:9999;
+  box-shadow:0 2px 20px rgba(0,0,0,.6);
+}
+
+.logo-link{
+  font-size:32px;
+  font-weight:800;
+  letter-spacing:2px;
+  color:var(--neon);
+  text-shadow:0 0 15px var(--neon-soft);
+  text-decoration:none;
+}
+
+.logo-link:hover{color:#fff}
+
+.nav-menu{
+  list-style:none;
+  display:flex;
+  gap:40px;
+}
+
+.nav-menu li a{
+  text-decoration:none;
+  color:rgba(255,255,255,.7);
+  font-weight:600;
+  transition:.3s;
+}
+
+.nav-menu li a:hover,
+.nav-menu li a.active{
+  color:var(--neon);
+}
+
+.hamburger{
+  display:none;
+  flex-direction:column;
+  cursor:pointer;
+  gap:5px;
+}
+
+.hamburger span{
+  width:25px;
+  height:3px;
+  background:var(--neon);
+  border-radius:3px;
+}
+
+/* ===== MOBILE NAV ===== */
+@media(max-width:768px){
+  .nav-menu{
+    position:absolute;
+    top:80px;
+    right:0;
+    flex-direction:column;
+    background:#02040a;
+    width:200px;
+    display:none;
+    border-left:2px solid var(--neon);
+    padding:20px;
+  }
+  .nav-menu.active{display:flex}
+  .hamburger{display:flex}
+}
+
+/* ===== PULSE SECTION ===== */
+.pulse{
+  max-width:900px;
+  margin:120px auto 40px;
+  padding:40px 25px;
+  background:rgba(5,10,20,.85);
+  border:1px solid var(--neon);
+  border-radius:16px;
+  text-align:center;
+  box-shadow:0 0 40px rgba(45,255,179,.15);
+}
+
+.pulse-title{
+  font-size:52px;
+  color:var(--neon);
+  text-shadow:
+    0 0 10px var(--neon-soft),
+    0 0 30px var(--neon-soft),
+    0 0 60px var(--neon-soft);
+  animation:pulse-glow 2.2s infinite alternate;
+}
+
+.pulse-sub{
+  margin-top:10px;
+  letter-spacing:2px;
+  font-size:16px;
+  color:rgba(255,255,255,.8);
+}
+
+/* ===== FEED ===== */
+.pulse-feed{
+  margin-top:40px;
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+  max-height:350px;
+  overflow:hidden;
+}
+
+.pulse-item{
+  padding:18px 20px;
+  border-radius:12px;
+  background:rgba(0,0,0,.45);
+  color:rgba(255,255,255,.85);
+  text-align:left;
+  font-size:15px;
+  line-height:1.6;
+  animation:pulse-slide 1s ease;
+  border-left:4px solid var(--neon);
+  box-shadow:0 0 20px rgba(45,255,179,.12);
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes pulse-glow{
+  from{
+    text-shadow:0 0 10px var(--neon-soft),0 0 30px var(--neon-soft);
+  }
+  to{
+    text-shadow:0 0 25px var(--neon),0 0 70px var(--neon);
+  }
+}
+
+@keyframes pulse-slide{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ===== MOBILE ===== */
+@media(max-width:768px){
+  .pulse-title{font-size:36px}
+  .pulse-sub{font-size:14px}
+  .pulse-item{font-size:14px}
+}
+</style>
+
+
+
+
+
+<script>
+function toggleMenu(){
+  document.querySelector('.nav-menu').classList.toggle('active');
+}
+
+const pulseFeed=document.getElementById('pulseFeed');
+function scrollPulse(){
+  const first=pulseFeed.firstElementChild;
+  pulseFeed.appendChild(first.cloneNode(true));
+  pulseFeed.removeChild(first);
+}
+setInterval(scrollPulse,4000);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PakGames – Cyberpunk Container</title>
+<link rel="icon" type="image/png" href="./170ba712-048d-4b28-9853-f7a60df06289-md.jpeg">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --neon:#2dffb3;
+  --neon-soft:rgba(45,255,179,.45);
+  --bg-dark:#05080f;
+  --bg-mid:#070d1a;
+  --glass:rgba(8,14,25,.88);
+}
+
+/* RESET */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Orbitron',sans-serif;}
+html,body{
+  width:100%;
+  scroll-behavior:smooth;
+  background:radial-gradient(circle at top,#0b1a2f,var(--bg-dark)),linear-gradient(135deg,var(--bg-mid),#000);
+  color:var(--neon);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:10px;}
+::-webkit-scrollbar-track{background:#05080f;}
+::-webkit-scrollbar-thumb{background:linear-gradient(to bottom,#2dffb3,#3ddcff);border-radius:10px;}
+
+/* NAVBAR */
+nav{
+  position:fixed; top:0; right:0; width:100%; height:80px;
+  background:linear-gradient(90deg,#050912,#070c16,#050912);
+  display:flex; align-items:center; justify-content:space-between; padding:0 40px;
+  z-index:999; box-shadow:0 0 25px rgba(45,255,179,.15); backdrop-filter:blur(6px);
+  transition:0.3s;
+}
+.logo-link{
+  color:var(--neon); font-size:28px; font-weight:800; letter-spacing:3px; text-decoration:none;
+  text-shadow:0 0 18px var(--neon-soft); transition:.3s;
+}
+.logo-link:hover{ text-shadow:0 0 30px var(--neon),0 0 60px var(--neon); }
+
+.nav-menu{
+  list-style:none; display:flex; gap:32px;
+  transition: max-height 0.4s ease;
+}
+.nav-menu a{
+  text-decoration:none; color:rgba(255,255,255,.7); font-size:14px; letter-spacing:1px;
+  position:relative; transition:.3s;
+}
+.nav-menu a::after{
+  content:""; position:absolute; left:0; bottom:-5px; width:0; height:2px; background:var(--neon); transition:.3s;
+}
+.nav-menu a:hover, .nav-menu a.active{ color:var(--neon); text-shadow:0 0 10px var(--neon-soft); }
+.nav-menu a:hover::after, .nav-menu a.active::after{ width:100%; }
+
+/* HAMBURGER */
+.hamburger{
+  display:none; flex-direction:column; gap:5px; cursor:pointer; z-index:1001;
+}
+.hamburger span{
+  width:26px; height:3px; background:var(--neon); border-radius:3px; transition: all 0.4s ease;
+}
+.hamburger.active span:nth-child(1){ transform: rotate(45deg) translate(5px,5px); }
+.hamburger.active span:nth-child(2){ opacity:0; }
+.hamburger.active span:nth-child(3){ transform: rotate(-45deg) translate(5px,-5px); }
+
+/* MOBILE NAV FIX */
+@media(max-width:992px){
+  nav{
+    flex-direction: row; /* logo left, hamburger right */
+    justify-content: space-between;
+    padding: 0 20px;
+    height: 80px;
+  }
+
+  .hamburger{
+    display:flex;
+  }
+
+  .nav-menu{
+    position: absolute;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    background: var(--bg-dark);
+    border-top: 1px solid var(--neon-soft);
+    flex-direction: column;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.4s ease;
+    z-index: 998;
+  }
+
+  .nav-menu.active{
+    max-height: 500px;
+  }
+
+  .nav-menu li{
+    width:100%;
+    text-align:center;
+    padding:12px 0;
+  }
+}
+
+/* CONTAINER */
+.container{
+  width:90%; max-width:1200px; background:var(--glass); border:1px solid rgba(45,255,179,.5);
+  padding:22px; margin:140px auto 50px; box-shadow:0 0 28px rgba(45,255,179,.35), inset 0 0 30px rgba(45,255,179,.15);
+  border-radius:14px; animation:flicker 3s infinite; transition:.3s;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:24px;
+}
+.container:hover{ transform:scale(1.02); }
+
+.container h2{ font-size:20px; margin-bottom:10px; text-shadow:0 0 10px rgba(45,255,179,.6);}
+.container p, .container li{ font-size:14px; line-height:1.6; color:rgba(255,255,255,.75); margin-bottom:8px; }
+.container ul{ padding-left:20px; margin-bottom:12px;}
+.container img{ width:100%; height:200px; object-fit:cover; border-radius:8px; margin-bottom:12px;
+  border:1px solid rgba(45,255,179,.6); box-shadow:0 0 18px rgba(45,255,179,.4); transition:.4s;}
+.container img:hover{ transform:scale(1.03); box-shadow:0 0 28px var(--neon-soft);}
+
+/* LARGE SCREENS - 2 COLUMN LAYOUT */
+@media(min-width:768px){
+  .container{
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .container img{height:180px;}
+}
+
+/* ANIMATION */
+@keyframes flicker{
+  0%,100%{ box-shadow:0 0 25px rgba(45,255,179,.3), inset 0 0 20px rgba(45,255,179,.15); }
+  50%{ box-shadow:0 0 40px rgba(45,255,179,.45), inset 0 0 30px rgba(45,255,179,.25); }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo-link">SPIFF ULTIMATE</a>
+  <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  <ul class="nav-menu">
+    <li><a href="nexus.html">Nexus</a></li>
+    <li><a href="vault.html">Vault</a></li>
+    <li><a href="arena.html">Arena</a></li>
+    <li><a href="questline.html">Questline</a></li>
+    <li><a href="echoes.html">Echoes</a></li>
+    <li><a href="pulse.html">Pulse</a></li>
+    <li><a href="signa.html" class="active">Signa</a></li>
+  </ul>
+</nav>
+
+<!-- CONTAINER -->
+<div class="container">
+  <div>
+    <h2>National Mini Book</h2>
+    <img src="./download.jpg" alt="Cover">
+    <p>Welcome to the PakGames cyber hub. Explore teams, stories, and live data.</p>
+  </div>
+
+  <div>
+    <h2>Developers</h2>
+    <img src="./photo-1581310118098-898fd1e56f23.avif" alt="Developers">
+    <ul>
+      <li>Alex “CodeBlade”</li>
+      <li>Maya “NeonScript”</li>
+    </ul>
+  </div>
+
+  <div>
+    <h2>Gamers</h2>
+    <img src="./download.png" alt="Gamers">
+    <ul>
+      <li>Rex “ShadowStorm”</li>
+      <li>Lina “PixelQueen”</li>
+    </ul>
+  </div>
+
+  <div>
+    <h2>Teams</h2>
+    <img src="./futuristic-business-office-space.jpg" alt="Teams">
+    <ul>
+      <li>NeonStrike</li>
+      <li>ByteRaiders</li>
+    </ul>
+  </div>
+
+  <div>
+    <h2>Designers</h2>
+    <img src="./cartoon-students-math-class.jpg" alt="Designers">
+    <ul>
+      <li>Eli “GlowVector”</li>
+      <li>Sara “PixelMist”</li>
+    </ul>
+  </div>
+
+  <div>
+    <h2>Articles</h2>
+    <img src="./istockphoto-2227014762-612x612.webp" alt="Articles">
+    <p>📰 Cyberstorm AI Grid Update</p>
+    <p>🎮 Shadow Run Quest Unlocked</p>
+  </div>
+</div>
+
+<script>
+function toggleMenu(){
+  const navMenu = document.querySelector('.nav-menu');
+  const hamburger = document.querySelector('.hamburger');
+  navMenu.classList.toggle('active');
+  hamburger.classList.toggle('active');
+}
+</script>
+
+</body>
+</html>

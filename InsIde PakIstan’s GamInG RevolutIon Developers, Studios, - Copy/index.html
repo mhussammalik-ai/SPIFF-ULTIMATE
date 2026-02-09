@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pakistan Gaming Industry - Explore, Create, Power</title>
+    <link rel="icon" type="image/png" href="./170ba712-048d-4b28-9853-f7a60df06289-md.jpeg">
+     <script defer src="app.js"></script>
+     <link rel="stylesheet" href="style.css"> 
+    
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<!-- FLOATING CHAT ICON -->
+<div id="chatbot-toggle">💬</div>
+
+<!-- CHATBOT -->
+<div id="chatbot">
+  <div id="chatbot-header">
+    <span>SPIFF ULTIMATE</span>
+    <button id="chatbot-close">×</button>
+  </div>
+  <div id="chatbot-body">
+    <div class="chat-message bot">
+      👾 Welcome to PAKGAMES! Ask me anything about our games, website, or the Pakistani gaming industry.
+    </div>
+  </div>
+  <div id="chatbot-input">
+    <input type="text" id="user-input" placeholder="Type a message..." />
+    <button id="send-btn">➤</button>
+  </div>
+  <div id="quick-links">
+    <button data-section="Nexus">Nexus</button>
+    <button data-section="Vault">Vault</button>
+    <button data-section="Arena">Arena</button>
+    <button data-section="Questline">Questline</button>
+    <button data-section="Echoes">Echoes</button>
+    <button data-section="Pulse">Pulse</button>
+    <button data-section="Signa">Signa</button>
+  </div>
+</div>
+
+<style>
+:root{
+  --neon:#2dffb3;
+  --neon-soft:rgba(45,255,179,.35);
+}
+
+/* CHATBOT STYLES */
+#chatbot-toggle {
+  position: fixed; bottom: 20px; right: 20px;
+  background: #0a0a0f; color: var(--neon); font-size: 28px;
+  padding: 12px 16px; border-radius: 50%; cursor: pointer;
+  box-shadow: 0 0 15px var(--neon); z-index: 9999;
+}
+#chatbot-toggle:hover { transform: scale(1.1); }
+
+#chatbot {
+  position: fixed; bottom: 80px; right: 20px;
+  width: 90%; max-width: 350px; max-height: 500px;
+  background: #0a0a0f; border: 2px solid var(--neon);
+  border-radius: 12px; display: none; flex-direction: column;
+  box-shadow: 0 0 20px var(--neon); z-index: 9999;
+  font-family: 'Orbitron', sans-serif;
+}
+#chatbot-header {
+  display: flex; justify-content: space-between; align-items: center;
+  background: #050505; padding: 10px; border-bottom: 1px solid var(--neon);
+  color: var(--neon); font-weight: bold; text-shadow: 0 0 5px var(--neon);
+}
+#chatbot-header button { background: transparent; border: none; color: var(--neon); font-size: 18px; cursor: pointer; }
+
+#chatbot-body {
+  flex: 1; padding: 10px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;
+}
+.chat-message { padding: 8px 12px; border-radius: 10px; max-width: 80%; word-wrap: break-word; animation: glow 1.5s infinite alternate; }
+.chat-message.bot { background: var(--neon); color: #000; align-self: flex-start; box-shadow: 0 0 10px var(--neon); }
+.chat-message.user { background: #1a1a1a; color: var(--neon); align-self: flex-end; box-shadow: 0 0 10px var(--neon) inset; }
+@keyframes glow { 0% { box-shadow: 0 0 5px var(--neon); } 100% { box-shadow: 0 0 20px var(--neon); } }
+
+#chatbot-input { display: flex; border-top: 1px solid var(--neon); }
+#chatbot-input input { flex: 1; padding: 8px; background: #050505; border: none; color: var(--neon); outline: none; }
+#chatbot-input button { background: var(--neon); border: none; color: #0a0a0f; padding: 0 12px; cursor: pointer; font-weight: bold; }
+
+#quick-links { display: flex; justify-content: space-around; padding: 6px; border-top: 1px solid var(--neon); flex-wrap: wrap; gap: 4px; }
+#quick-links button { background: transparent; border: 1px solid var(--neon); color: var(--neon); padding: 4px 6px; border-radius: 6px; cursor: pointer; font-size: 12px; transition: 0.2s; }
+#quick-links button:hover { background: var(--neon); color: #0a0a0f; }
+</style>
+
+<script>
+// CHATBOT LOGIC
+const chatbotToggle = document.getElementById('chatbot-toggle');
+const chatbot = document.getElementById('chatbot');
+const chatbotClose = document.getElementById('chatbot-close');
+const sendBtn = document.getElementById('send-btn');
+const userInput = document.getElementById('user-input');
+const chatbotBody = document.getElementById('chatbot-body');
+const quickLinks = document.querySelectorAll('#quick-links button');
+
+chatbotToggle.addEventListener('click', () => { chatbot.style.display='flex'; chatbotToggle.style.display='none'; });
+chatbotClose.addEventListener('click', () => { chatbot.style.display='none'; chatbotToggle.style.display='block'; });
+
+function addMessage(msg, sender='bot'){
+  const div = document.createElement('div'); 
+  div.classList.add('chat-message', sender); 
+  div.textContent = msg;
+  chatbotBody.appendChild(div); 
+  chatbotBody.scrollTop = chatbotBody.scrollHeight;
+}
+
+function botReply(msg){
+  const message = msg.toLowerCase();
+  let reply = "🤖 I don't understand. Use quick links or ask about PAKGAMES!";
+
+  if(message.includes("nexus")) reply="🚀 Nexus: Hub for latest game news, updates, and resources.";
+  else if(message.includes("vault")) reply="🔒 Vault: Your achievements, collections, and special content.";
+  else if(message.includes("arena")) reply="🏆 Arena: Competitive battles, live events, skill-based matchmaking.";
+  else if(message.includes("questline")) reply="📜 Questline: Story missions, choices, and player progression.";
+  else if(message.includes("echoes")) reply="🎵 Echoes: Blogs, stories, and gaming culture in Pakistan.";
+  else if(message.includes("pulse")) reply="💓 Pulse: Analytics and trends of the Pakistani gaming industry.";
+  else if(message.includes("signa")) reply="✨ Signa: Developer profiles and contributions.";
+  else if(message.includes("website") || message.includes("full detail")){
+    reply=`🌐 PAKGAMES: Premier Pakistani gaming portal.
+Sections: Nexus, Vault, Arena, Questline, Echoes, Pulse, Signa.
+Neon futuristic design, mobile-friendly layout, interactive chatbot.`;
+  }
+  else if(message.includes("developer") || message.includes("studio") || message.includes("career")){
+    reply="👨‍💻 Developers & Studios: Mindstorm, Caramel Tech, indie developers. Careers: developer, designer, esports player, content creator.";
+  }
+  else if(message.includes("industry") || message.includes("trends")){
+    reply="📈 Pakistan's gaming industry: Growing fast with mobile, AR/VR, AI, cloud gaming, and esports.";
+  }
+  else if(message.includes("esports")){
+    reply="🎮 Esports: Local tournaments, pro players internationally, and streaming growth.";
+  }
+
+  addMessage(reply,'bot');
+}
+
+sendBtn.addEventListener('click', ()=> {
+  const msg = userInput.value.trim();
+  if(msg){ addMessage(msg,'user'); setTimeout(()=>botReply(msg),600); userInput.value=''; }
+});
+userInput.addEventListener('keypress', e => { if(e.key==='Enter') sendBtn.click(); });
+
+quickLinks.forEach(btn => {
+  btn.addEventListener('click', () => {
+    addMessage(`Taking me to ${btn.dataset.section}`,'user');
+    setTimeout(()=>botReply(btn.dataset.section),500);
+  });
+});
+</script>
+
+
+</body>
+</html>
+    <div class="animated-bg"></div>
+
+     Navigation
+    <nav>
+        <div class="nav-container">
+            <div class="logo">SPIFF ULTIMATE</div>
+            <ul class="nav-menu">
+                <li><a href="nexus.html">Nexus</a></li>
+                <li><a href="vault.html">Vault</a></li>
+                <li><a href="arena.html">Arena</a></li>
+                <li><a href="questline.html">Questline</a></li>
+                <li><a href="echoes.html">Echoes</a></li>
+                <li><a href="pulse.html">Pulse</a></li>
+                <li><a href="signa.html">Signa</a></li>
+            </ul>
+            <div class="nav-icons">
+                <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+                </svg>
+                <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                </svg>
+                <button class="btn-login" onclick="openModal()">Login</button>
+                <div class="hamburger" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+<section class="hero" id="home">
+
+    <div class="slide active">
+        <div class="content">
+            <h1><span>EXPLORE</span><br>THE FUTURE</h1>
+            <p>Building next-generation digital and gaming experiences.</p>
+        </div>
+        <img src="./cartoon-students-math-class.jpg" alt="Explore">
+    </div>
+
+    <!-- DOTS -->
+    <div class="dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+
+</section>
+
+
+
+<!-- 1. Overview -->
+<section id="overview">
+  <div class="container">
+    <h2>Pakistan Gaming Industry Overview</h2>
+    <p class="subtitle">A fast-growing digital industry driven by young talent and innovation.</p>
+
+    <div class="grid">
+      <div class="card" style="background-image: url('./istockphoto-2227014762-612x612.webp');">
+        <h3>Industry Growth</h3>
+        <p>Pakistan’s gaming sector is expanding rapidly, especially in mobile and indie games.</p>
+      </div>
+      <div class="card" style="background-image: url('./photo-1613567178573-e1ba31966de9.avif');">
+        <h3>Youth Talent</h3>
+        <p>Students and self-taught developers are creating competitive games.</p>
+      </div>
+      <div class="card" style="background-image: url('./premium_photo-1677675594653-1502416c3b6e.avif');">
+        <h3>Global Potential</h3>
+        <p>Pakistani studios are entering international markets.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. Developers & Studios Profiles -->
+<section id="developers">
+  <div class="container">
+    <h2>Developers & Studios Profiles</h2>
+    <p class="subtitle">Meet Pakistan’s gaming creators</p>
+
+    <div class="grid">
+      <div class="card" style="background-image: url('./photo-1587978573223-fa2e90c8f59d.avif');">
+        <h3>Mindstorm Studios</h3>
+        <p>AAA-quality game development studio from Lahore.</p>
+      </div>
+      <div class="card" style="background-image: url('./photo-1636036704268-017faa3b6557.avif');">
+        <h3>Caramel Tech Studios</h3>
+        <p>Mobile-focused studio with global downloads.</p>
+      </div>
+      <div class="card" style="background-image: url('./istockphoto-1077503670-612x612.webp');">
+        <h3>Indie Developers</h3>
+        <p>Young creators producing innovative games.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 2. Trends -->
+<section id="trends">
+  <div class="container">
+    <h2>Future Gaming Trends</h2>
+    <p class="subtitle">AI, AR/VR, Mobile & Cloud Gaming</p>
+
+    <div class="grid">
+      <div class="card" style="background-image: url('./photo-1581310118098-898fd1e56f23.avif');">
+        <h3>Artificial Intelligence</h3>
+        <p>Smarter NPCs and adaptive gameplay.</p>
+      </div>
+
+      <div class="card" style="background-image: url('./photo-1698512475067-74ed7c956c8d.avif'); width: 2 px; height: 2;">
+        <h3>AR / VR</h3>
+        <p>Immersive and interactive gaming experiences.</p>
+      </div>
+
+      <div class="card" style="background-image: url('./photo-1667984390527-850f63192709.avif');">
+        <h3>Mobile & Cloud</h3>
+        <p>Gaming anytime, anywhere.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Esports -->
+<section id="esports">
+  <div class="container">
+    <h2>Esports in Pakistan</h2>
+    <p class="subtitle">Competitive gaming on the rise</p>
+
+    <div class="grid">
+      <div class="card" style="background-image: url('./download.jpg');">
+        <h3>Local Tournaments</h3>
+        <p>University and national esports competitions.</p>
+      </div>
+
+      <div class="card" style="background-image: url('./download\ \(1\).jpg');">
+        <h3>Pro Players</h3>
+        <p>Pakistani players competing internationally.</p>
+      </div>
+
+      <div class="card" style="background-image: url('./download.png');">
+        <h3>Streaming</h3>
+        <p>Growth of gaming content creators.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 5. Careers -->
+<section id="careers">
+  <div class="container">
+    <h2>Career Opportunities in Gaming</h2>
+    <p class="subtitle">Turn passion into profession</p>
+    <div class="grid">
+      <div class="card" style="background-image: url('./photo-1669023414162-5bb06bbff0ec.avif');">
+        <h3>Game Developer</h3>
+        <p>Programming and game mechanics.</p>
+      </div>
+      <div class="card" style="background-image: url('./photo-1673350808686-209dc177c898.avif');">
+        <h3>Game Designer</h3>
+        <p>Level and experience design.</p>
+      </div>
+      <div class="card" style="background-image: url('./photo-1619597455408-d2c4b5567f6f.avif');">
+        <h3>Esports Player</h3>
+        <p>Professional competitive gaming.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 1. Contact -->
+<section id="contact" style="background-image: url('./images/contact-bg.jpg');">
+  <div class="container">
+    <h2>Contact / Feedback</h2>
+    <p class="subtitle">Get in touch with us</p>
+    <form onsubmit="return submitForm(event)">
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea rows="4" placeholder="Your Message" required></textarea>
+         <div class="linkbox">
+   <!-- NEW PAGE LINK -->
+  <div class="link-box">
+    <a href="newpage.html" class="neon-link">creator-profiles</a>
+  </div>
+
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+</section>
+
+
+
+
+  
+  
+  <!-- Container for content -->
+  <div style="position: relative; z-index:1; max-width: 900px; margin:0 auto;">
+    <h2 style="font-size: 2.8rem; margin-bottom: 20px;">Conclusion & Future Expansion</h2>
+    <p style="font-size: 1.2rem; line-height: 1.8;">
+      Pakistan’s gaming industry is rapidly evolving, fueled by young talent, innovation, and a growing digital infrastructure.<br><br>
+      With increasing mobile and online gaming adoption, local developers are producing high-quality games that compete internationally.<br><br>
+      The future holds immense potential for global growth, especially in areas such as <strong>eSports, AR/VR gaming, cloud-based gaming, and AI-driven game mechanics</strong>.<br><br>
+      By providing better support, investment opportunities, and industry recognition, Pakistan can establish itself as a major player in the global gaming market.<br><br>
+      Collaboration between educational institutions, studios, and tech communities will further strengthen the ecosystem, creating exciting career paths and innovative gaming experiences for years to come.
+    </p>
+
+
+</section>
+
+
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>PAKGAMES</h3>
+                <p>Pakistan's premier gaming industry platform. Connecting players, developers, and enthusiasts nationwide.</p>
+                <div class="social-links">
+                    <div class="social-link">f</div>
+                    <div class="social-link">t</div>
+                    <div class="social-link">i</div>
+                    <div class="social-link">y</div>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="#home">Home</a>
+                <a href="#vault">Future Trends</a>
+                <a href="#arena">Esports</a>
+                <a href="#questline">Developers</a>
+            </div>
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <a href="#">Game Library</a>
+                <a href="#">Gallery</a>
+                <a href="#">About</a>
+                <a href="#">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h3>Newsletter</h3>
+                <p>Stay updated with the latest in Pakistani gaming</p>
+                <form style="margin-top: 1rem;">
+                    <input type="email" placeholder="Your email" style="width: 100%; padding: 0.8rem; background: var(--card-bg); border: 1px solid var(--primary); border-radius: 5px; color: var(--light); margin-bottom: 0.5rem;">
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Pakistan Gaming Industry. All rights reserved. Made with ❤️ in Pakistan</p>
+        </div>
+    </footer>
+
+    <!-- Enhanced Login/Signup Modal with Glassmorphism -->
+    <div class="modal" id="authModal">
+        <div class="modal-backdrop" onclick="closeModal()"></div>
+        <div class="modal-content-enhanced">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            
+            <!-- Login Form -->
+            <div class="auth-container" id="loginContainer">
+                <div class="auth-side-panel">
+                    <div class="side-panel-content">
+                        <h2>Welcome Back!</h2>
+                        <p>Enter your credentials to access your gaming profile</p>
+                        <div class="decorative-circles">
+                            <div class="circle circle-1"></div>
+                            <div class="circle circle-2"></div>
+                            <div class="circle circle-3"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="auth-main-panel">
+                    <h2 class="auth-title">Login</h2>
+                    <form class="enhanced-auth-form" id="loginForm" onsubmit="return handleLogin(event)">
+                        <div class="input-group">
+                            <div class="input-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                            </div>
+                            <input type="text" id="loginUsername" placeholder="Username" required>
+                            <div class="input-underline"></div>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                            </div>
+                            <input type="password" id="loginPassword" placeholder="Password" required>
+                            <div class="input-underline"></div>
+                        </div>
+                        <div class="form-options">
+                            <label class="remember-me">
+                                <input type="checkbox" id="rememberMe">
+                                <span>Remember me</span>
+                            </label>
+                            <a href="#" class="forgot-password">Forgot Password?</a>
+                        </div>
+                        <button type="submit" class="btn-auth">
+                            <span>Login</span>
+                            <div class="btn-glow"></div>
+                        </button>
+                    </form>
+                    <div class="social-login">
+                        <p>Or login with</p>
+                        <div class="social-buttons">
+                            <button class="social-btn google">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                                </svg>
+                            </button>
+                            <button class="social-btn facebook">f</button>
+                            <button class="social-btn twitter">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
+                                </svg>
+                            </button>
+                            <button class="social-btn linkedin">in</button>
+                        </div>
+                    </div>
+                    <div class="switch-auth">
+                        <span>Don't have an account?</span>
+                        <a onclick="switchToSignup()">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Signup Form -->
+            <div class="auth-container" id="signupContainer" style="display: none;">
+                <div class="auth-main-panel">
+                    <h2 class="auth-title">Sign Up</h2>
+                    <form class="enhanced-auth-form" id="signupForm" onsubmit="return handleSignup(event)">
+                        <div class="input-group">
+                            <div class="input-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                            </div>
+                            <input type="text" id="signupName" placeholder="Full Name" required>
+                            <div class="input-underline"></div>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                            </div>
+                            <input type="email" id="signupEmail" placeholder="Email" required>
+                            <div class="input-underline"></div>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                            </div>
+                            <input type="password" id="signupPassword" placeholder="Password" required>
+                            <div class="input-underline"></div>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                            </div>
+                            <input type="password" id="signupConfirmPassword" placeholder="Confirm Password" required>
+                            <div class="input-underline"></div>
+                        </div>
+                        <button type="submit" class="btn-auth">
+                            <span>Sign Up</span>
+                            <div class="btn-glow"></div>
+                        </button>
+                    </form>
+                    <div class="social-login">
+                        <p>Or sign up with</p>
+                        <div class="social-buttons">
+                            <button class="social-btn google">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                                </svg>
+                            </button>
+                            <button class="social-btn facebook">f</button>
+                            <button class="social-btn twitter">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
+                                </svg>
+                            </button>
+                            <button class="social-btn linkedin">in</button>
+                        </div>
+                    </div>
+                    <div class="switch-auth">
+                        <span>Already have an account?</span>
+                        <a onclick="switchToLogin()">Login</a>
+                    </div>
+                </div>
+                <div class="auth-side-panel">
+                    <div class="side-panel-content">
+                        <h2>Join Us!</h2>
+                        <p>Create your account and become part of Pakistan's gaming revolution</p>
+                        <div class="decorative-circles">
+                            <div class="circle circle-1"></div>
+                            <div class="circle circle-2"></div>
+                            <div class="circle circle-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" id="scrollToTop" onclick="scrollToTop()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+    </button>
+</body>
+</html>
+
+

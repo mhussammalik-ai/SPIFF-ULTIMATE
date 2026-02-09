@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPIFF ULTIMATE – Apply for Funding / Access</title>
+<link rel="icon" type="image/png" href="./170ba712-048d-4b28-9853-f7a60df06289-md.jpeg">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --neon:#2dffb3;
+  --neon-soft:rgba(45,255,179,.45);
+  --bg-dark:#05080f;
+  --bg-mid:#070d1a;
+  --shadow-neon:0 0 20px var(--neon-soft),0 0 50px var(--neon-soft);
+}
+
+/* RESET */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Orbitron',sans-serif;}
+html,body{height:100%;background:radial-gradient(circle at top,#0b1a2f,var(--bg-dark)),linear-gradient(135deg,var(--bg-mid),#000);color:var(--neon);scroll-behavior:smooth;}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:#05080f}
+::-webkit-scrollbar-thumb{
+  background:linear-gradient(to bottom,#2dffb3,#3ddcff);
+  border-radius:10px
+}
+
+/* NAVBAR */
+nav{
+  position:fixed;top:0;left:0;width:100%;height:80px;
+  background:linear-gradient(90deg,#050912,#070c16,#050912);
+  display:flex;align-items:center;justify-content:space-between;padding:0 40px;z-index:9999;
+  box-shadow:0 2px 20px rgba(0,0,0,.6);
+}
+.logo-link{color:var(--neon);font-size:32px;font-weight:800;letter-spacing:2px;text-decoration:none;text-shadow:var(--shadow-neon);}
+.nav-menu{list-style:none;display:flex;gap:40px;}
+.nav-menu li a{color:rgba(255,255,255,.7);text-decoration:none;font-size:16px;font-weight:600;position:relative;transition:.3s;}
+.nav-menu li a::after{content:"";position:absolute;width:0;height:2px;background:var(--neon);left:0;bottom:-4px;transition:.3s;}
+.nav-menu li a:hover{color:var(--neon);}
+.nav-menu li a:hover::after{width:100%;}
+
+/* HAMBURGER */
+.hamburger{
+  display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001;
+}
+.hamburger span{
+  width:26px;height:3px;background:var(--neon);border-radius:3px;transition:all 0.4s ease;
+}
+.hamburger.active span:nth-child(1){ transform: rotate(45deg) translate(5px,5px); }
+.hamburger.active span:nth-child(2){ opacity:0; }
+.hamburger.active span:nth-child(3){ transform: rotate(-45deg) translate(5px,-5px); }
+
+/* MOBILE NAV */
+@media(max-width:992px){
+  .hamburger{display:flex;}
+  .nav-menu{
+    flex-direction:column;width:100%;overflow:hidden;max-height:0;transition:max-height 0.4s ease;
+  }
+  .nav-menu.active{max-height:500px;}
+  .nav-menu li{width:100%;text-align:center;padding:10px 0;}
+}
+
+/* CONTAINER */
+.container{
+  max-width:900px;
+  margin:140px auto 60px;
+  padding:40px;
+  background:#0a0a0f;
+  border:2px solid var(--neon);
+  border-radius:20px;
+  box-shadow:0 0 50px var(--neon-soft);
+}
+
+/* HEADINGS */
+h1{text-align:center;font-size:42px;text-shadow:var(--shadow-neon);margin-bottom:10px;}
+p.sub{text-align:center;color:#baffba;margin-bottom:40px;font-size:1.1rem;}
+
+/* FORM */
+.form-group{margin-bottom:20px;}
+label{display:block;margin-bottom:6px;font-size:14px;color:#9aff9a;}
+input,select,textarea{
+  width:100%;padding:12px;background:#050505;border:1px solid var(--neon);color:var(--neon);border-radius:6px;
+}
+input:focus,select:focus,textarea:focus{
+  outline:none;
+  box-shadow:0 0 12px var(--neon-soft),0 0 25px var(--neon-soft) inset;
+}
+textarea{resize:none}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+
+/* CHECKBOX */
+.checkbox{display:flex;gap:10px;font-size:12px;color:#baffba;margin-top:10px;}
+
+/* BUTTON */
+button{
+  width:100%;padding:16px;margin-top:30px;background:transparent;border:2px solid var(--neon);color:var(--neon);
+  border-radius:12px;cursor:pointer;font-weight:700;font-size:1.1rem;letter-spacing:1px;transition:.3s;
+}
+button:hover{background:var(--neon);color:#050505;box-shadow:0 0 35px var(--neon-soft);}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="index.html" class="logo-link">SPIFF ULTIMATE</a>
+  <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  <ul class="nav-menu">
+    <li><a href="nexus.html">Nexus</a></li>
+    <li><a href="vault.html">Vault</a></li>
+    <li><a href="arena.html">Arena</a></li>
+    <li><a href="questline.html">Questline</a></li>
+    <li><a href="echoes.html">Echoes</a></li>
+    <li><a href="pulse.html">Pulse</a></li>
+    <li><a href="signa.html">Signa</a></li>
+  </ul>
+</nav>
+
+<!-- FORM CONTAINER -->
+<div class="container">
+<h1>Apply for Funding / Access</h1>
+<p class="sub">For creators, developers, investors, or content creators interested in Signa</p>
+
+<form id="fundingForm">
+
+<div class="grid">
+  <div class="form-group">
+    <label>Full Name / Team Name</label>
+    <input type="text" name="name" required>
+  </div>
+  <div class="form-group">
+    <label>Email</label>
+    <input type="email" name="email" required>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="form-group">
+    <label>Role</label>
+    <select name="role" required>
+      <option value="">Select Role</option>
+      <option>Game Developer</option>
+      <option>Game Designer</option>
+      <option>Content Creator / Streamer</option>
+      <option>Investor / Funder</option>
+      <option>Startup / Studio</option>
+      <option>Other</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label>Country</label>
+    <input type="text" name="country" placeholder="e.g. India" required>
+  </div>
+</div>
+
+<div class="form-group">
+  <label>Project / Idea Title</label>
+  <input type="text" name="projectTitle" placeholder="Name of game, app, or idea" required>
+</div>
+
+<div class="form-group">
+  <label>Project Description</label>
+  <textarea name="description" rows="5" placeholder="Explain your idea, game, or proposal in detail" required></textarea>
+</div>
+
+<div class="grid">
+  <div class="form-group">
+    <label>Funding Type</label>
+    <select name="fundingType" required>
+      <option value="">Select</option>
+      <option>Seeking Funding</option>
+      <option>Offering Investment</option>
+      <option>Revenue Partnership</option>
+      <option>Sponsorship</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label>Estimated Budget (USD)</label>
+    <input type="number" name="budget" placeholder="e.g. 5000">
+  </div>
+</div>
+
+<div class="form-group">
+  <label>Portfolio / Game Link / GitHub / YouTube</label>
+  <input type="url" name="portfolio" placeholder="https://">
+</div>
+
+<div class="checkbox">
+  <input type="checkbox" name="agree" required>
+  <span>I confirm that the information provided is accurate and I agree to SPIFF ULTIMATE’s review process.</span>
+</div>
+
+<button type="submit">Submit Application</button>
+</form>
+</div>
+
+<script>
+// Hamburger menu toggle
+function toggleMenu() {
+  const navMenu = document.querySelector('.nav-menu');
+  const hamburger = document.querySelector('.hamburger');
+  navMenu.classList.toggle('active');
+  hamburger.classList.toggle('active');
+}
+
+// Form submission
+document.getElementById("fundingForm").addEventListener("submit", async function(e){
+  e.preventDefault();
+  const formData = new FormData(this);
+  const data = Object.fromEntries(formData.entries());
+  data.agree = formData.get('agree') === 'on';
+
+  try {
+    const response = await fetch('http://localhost:3000/api/apply', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    const result = await response.json();
+    if(result.success){
+      alert("✅ " + result.message);
+      this.reset();
+    } else {
+      alert("❌ Error: " + result.message);
+    }
+  } catch(error){
+    console.error('Error:', error);
+    alert('Failed to connect to server. Ensure backend is running.');
+  }
+});
+</script>
+
+</body>
+</html>

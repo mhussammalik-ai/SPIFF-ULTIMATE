@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Echoes – Signal Archive</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --neon:#2dffb3;
+  --neon-soft:rgba(45,255,179,.35);
+}
+
+/* RESET */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Orbitron',sans-serif;}
+html, body{
+  width:100%;
+  scroll-behavior:smooth;
+  background:radial-gradient(circle at top,#020617,#000);
+  color:#7CFC00;
+  overflow-x:hidden;
+}
+
+/* NAVBAR */
+nav{
+  position:fixed; top:0; left:0; width:100%; height:80px;
+  background:linear-gradient(90deg,#050912,#070c16,#050912);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 20px;
+  z-index:9999;
+  box-sizing:border-box;
+}
+.logo-link{
+  color:var(--neon);
+  font-size:28px;
+  font-weight:800;
+  letter-spacing:2px;
+  text-decoration:none;
+  text-shadow:0 0 10px var(--neon);
+}
+.nav-menu{
+  list-style:none;
+  display:flex;
+  gap:40px;
+}
+.nav-menu li a{
+  color:var(--neon);
+  text-decoration:none;
+  font-size:16px;
+  font-weight:600;
+  position:relative;
+  transition:.3s;
+}
+.nav-menu li a::after{
+  content:"";
+  position:absolute;
+  width:0;
+  height:2px;
+  background:var(--neon);
+  left:0;
+  bottom:-4px;
+  transition:.3s;
+}
+.nav-menu li a:hover::after{width:100%;}
+
+/* HAMBURGER */
+.hamburger{
+  display:none; 
+  flex-direction:column; 
+  gap:5px; 
+  cursor:pointer; 
+  z-index:1001;
+}
+.hamburger span{
+  width:26px;
+  height:3px;
+  background:var(--neon);
+  border-radius:3px;
+  transition: all 0.4s ease;
+}
+.hamburger.active span:nth-child(1){ transform: rotate(45deg) translate(5px,5px); }
+.hamburger.active span:nth-child(2){ opacity:0; }
+.hamburger.active span:nth-child(3){ transform: rotate(-45deg) translate(5px,-5px); }
+
+/* MOBILE NAV */
+@media(max-width:992px){
+  nav{
+    flex-direction: row; /* keep logo left, hamburger right */
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    height: 80px;
+  }
+
+  .hamburger{
+    display:flex;
+    order:2; /* hamburger right */
+  }
+
+  .logo-link{
+    order:1; /* logo left */
+  }
+
+  .nav-menu{
+    position: absolute;
+    top: 80px; /* below navbar */
+    left: 0;
+    width: 100%;
+    background: rgba(2,6,23,0.95);
+    flex-direction: column;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.4s ease;
+    z-index: 998;
+  }
+
+  .nav-menu.active{
+    max-height: 500px; /* expand menu */
+  }
+
+  .nav-menu li{
+    width: 100%;
+    text-align: center;
+    padding: 12px 0;
+  }
+}
+
+/* HEADER */
+.echoes-header{
+  height:70vh; padding-top:80px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+}
+.echoes-header h1{
+  font-size:72px; color:var(--neon-soft); letter-spacing:4px;
+  text-shadow:0 0 12px var(--neon-soft),0 0 40px rgba(45,255,179,.25);
+  animation:glitch 2.5s infinite;
+}
+.echoes-header p{
+  margin-top:14px; letter-spacing:4px; color:rgba(255,255,255,.6);
+}
+
+/* FEED */
+.feed{
+  max-width:900px; margin:auto; padding:80px 20px;
+}
+.signal{
+  background:rgba(5,8,15,.8); border-left:3px solid var(--neon-soft);
+  padding:30px; border-radius:16px; margin-bottom:40px; position:relative; animation:fadeUp .8s ease;
+}
+.signal::before{
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(120deg,transparent,var(--neon-soft),transparent);
+  opacity:0; animation:scan 4s infinite;
+}
+.signal h3{color:var(--neon); margin-bottom:10px;}
+.signal span{font-size:12px; letter-spacing:2px; color:rgba(255,255,255,.6);}
+.signal p{margin-top:10px; line-height:1.7; color:rgba(255,255,255,.75);}
+
+/* ARCHIVE */
+.archive{
+  padding:80px 20px; background:rgba(255,255,255,.02);
+}
+.archive h2{
+  text-align:center; font-size:40px; color:var(--neon-soft); margin-bottom:40px;
+}
+.archive-grid{
+  max-width:1100px; margin:auto;
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:25px;
+}
+.archive-item{
+  background:rgba(5,8,15,.75); border:1px solid rgba(255,255,255,.08);
+  padding:25px; border-radius:14px; transition:.4s;
+}
+.archive-item:hover{
+  transform:translateY(-8px); box-shadow:0 0 35px rgba(45,255,179,.25);
+}
+.archive-item h4{color:var(--neon); margin-bottom:8px;}
+.archive-item p{font-size:14px; color:rgba(255,255,255,.7);}
+
+/* TIMELINE & SLIDER */
+.questline{padding:100px 20px;}
+.slider{max-width:900px;margin:auto;position:relative;}
+.slide{display:none;text-align:center;padding:60px;border-radius:20px;border:1px solid rgba(45,255,179,.3);background:rgba(0,0,0,.7);box-shadow:0 0 40px rgba(45,255,179,.15);}
+.slide.active{display:block;}
+.slide h2{color:var(--neon);font-size:40px;margin-bottom:15px;}
+.slide p{color:#cbd5f5;font-size:18px;}
+.timeline{margin-top:60px;display:flex;justify-content:center;gap:40px;}
+.node{width:20px;height:20px;border-radius:50%;border:2px solid var(--neon);position:relative;cursor:pointer;}
+.node::after{content:""; position:absolute; top:50%; left:100%; width:40px; height:2px; background:rgba(45,255,179,.2);}
+.node:last-child::after{display:none;}
+.node.active{background:var(--neon);box-shadow:0 0 20px var(--neon);}
+
+/* ANIMATIONS */
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(12px)}}
+@keyframes glitch{0%{text-shadow:2px 2px var(--neon-soft)}50%{text-shadow:-2px -2px var(--neon-soft)}100%{text-shadow:2px -2px var(--neon-soft)}}
+@keyframes scan{0%{opacity:0}50%{opacity:.3}100%{opacity:0}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .echoes-header h1{font-size:46px;}
+  .slide h2{font-size:28px;}
+  .timeline{gap:25px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo-link">SPIFF ULTIMATE</a>
+  <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  <ul class="nav-menu">
+    <li><a href="nexus.html">Nexus</a></li>
+    <li><a href="vault.html">Vault</a></li>
+    <li><a href="arena.html">Arena</a></li>
+    <li><a href="questline.html">Questline</a></li>
+    <li><a href="echoes.html" class="active">Echoes</a></li>
+    <li><a href="pulse.html">Pulse</a></li>
+    <li><a href="signa.html">Signa</a></li>
+  </ul>
+</nav>
+
+<section class="echoes-header">
+  <h1>ECHOES</h1>
+  <p>SIGNALS • BLOG • PULSE ARCHIVE</p>
+</section>
+
+<section class="feed">
+  <div class="signal">
+    <h3>📡 Signal Detected: City Aftermath</h3>
+    <span>PULSE / STORY LOG</span>
+    <p>The district survived, but the echoes remain. Player choices reshaped alliances and fractured old systems.</p>
+  </div>
+  <div class="signal">
+    <h3>🧠 Developer Transmission #014</h3>
+    <span>DEV LOG</span>
+    <p>Narrative paths were designed to collapse into emotional consequences, not just endings.</p>
+  </div>
+  <div class="signal">
+    <h3>🎮 Community Echo</h3>
+    <span>PLAYER VOICE</span>
+    <p>“That final mission changed how I saw the whole story.”</p>
+  </div>
+</section>
+
+<section class="archive">
+  <h2>ARCHIVE</h2>
+  <div class="archive-grid">
+    <div class="archive-item"><h4>Story Log #001</h4><p>Initial encounter and branching paths.</p></div>
+    <div class="archive-item"><h4>Pulse Update</h4><p>Upcoming quest expansions.</p></div>
+    <div class="archive-item"><h4>Developer Note</h4><p>Why player choice matters.</p></div>
+    <div class="archive-item"><h4>Community Signal</h4><p>Top theories from players.</p></div>
+  </div>
+</section>
+
+<section class="questline">
+  <div class="slider">
+    <div class="slide active">
+      <h2>Meet the Stranger</h2>
+      <p>A mysterious figure appears and unlocks the journey.</p>
+    </div>
+    <div class="slide">
+      <h2>Save the District</h2>
+      <p>Your decisions change the fate of the city.</p>
+    </div>
+    <div class="slide">
+      <h2>Final Confrontation</h2>
+      <p>Defeat the enemy and define the ending.</p>
+    </div>
+  </div>
+  <div class="timeline">
+    <div class="node active" onclick="goToSlide(0)"></div>
+    <div class="node" onclick="goToSlide(1)"></div>
+    <div class="node" onclick="goToSlide(2)"></div>
+  </div>
+</section>
+
+<script>
+// Hamburger toggle
+function toggleMenu(){
+  const navMenu = document.querySelector('.nav-menu');
+  const hamburger = document.querySelector('.hamburger');
+  navMenu.classList.toggle('active');
+  hamburger.classList.toggle('active');
+}
+
+// Questline slider
+let current = 0;
+const slides = document.querySelectorAll('.slide');
+const nodes = document.querySelectorAll('.node');
+
+function showSlide(index){
+  slides.forEach(s=>s.classList.remove('active'));
+  nodes.forEach(n=>n.classList.remove('active'));
+  slides[index].classList.add('active');
+  nodes[index].classList.add('active');
+  current = index;
+}
+
+function goToSlide(i){showSlide(i);}
+
+// Auto slide
+setInterval(()=>{
+  let next = (current+1)%slides.length;
+  showSlide(next);
+},4500);
+</script>
+
+</body>
+</html>

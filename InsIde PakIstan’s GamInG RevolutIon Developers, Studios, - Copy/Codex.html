@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeonGrid - Cyberpunk Hub</title>
+<link rel="icon" type="image/png" href="./170ba712-048d-4b28-9853-f7a60df06289-md.jpeg">
+</head>
+<body>
+
+<div class="container">
+  <h2>National Mini Book</h2>
+  <img src="https://via.placeholder.com/1000x180.png?text=Cyberpunk+Cover" alt="Cover">
+  <p>Welcome to the ultimate cyberpunk gaming hub! Click or explore as you scroll.</p>
+
+  <h2>Developers</h2>
+  <img src="https://via.placeholder.com/1000x180.png?text=Dev+Team" alt="Dev1">
+  <ul>
+    <li>Alex "CodeBlade"</li>
+    <li>Maya "NeonScript"</li>
+    <li>Ryo "ByteFury"</li>
+  </ul>
+
+  <h2>Gamers</h2>
+  <img src="https://via.placeholder.com/1000x180.png?text=Top+Gamers" alt="Gamers">
+  <ul>
+    <li>Rex "ShadowStorm"</li>
+    <li>Lina "PixelQueen"</li>
+    <li>Kai "SynthBlade"</li>
+  </ul>
+
+  <h2>Teams</h2>
+  <img src="https://via.placeholder.com/1000x180.png?text=Teams" alt="Teams">
+  <ul>
+    <li>NeonStrike</li>
+    <li>ByteRaiders</li>
+    <li>QuantumCore</li>
+  </ul>
+
+  <h2>Designers</h2>
+  <img src="https://via.placeholder.com/1000x180.png?text=Designers" alt="Designers">
+  <ul>
+    <li>Eli "GlowVector"</li>
+    <li>Sara "PixelMist"</li>
+    <li>Nova "TechAura"</li>
+  </ul>
+
+  <h2>Articles</h2>
+  <img src="https://via.placeholder.com/1000x180.png?text=Gaming+News" alt="News">
+  <p>📰 Cyberstorm AI Grid update</p>
+  <p>🎮 Shadow Run Quest unlocked</p>
+  <p>💾 VR Arena Tips: Optimize your rig for max FPS</p>
+  <p>⚡ Neon Tournaments: Register for global cyberpunk championship</p>
+</div>
+
+
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:"Orbitron",Arial,sans-serif; }
+
+body {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  background:#000;
+}
+
+/* ===== FULLSCREEN CONTAINER ===== */
+.container {
+  width:90%;
+  max-width:1000px;
+  background:rgba(0,0,0,0.85);
+  border:2px solid #00ff00;
+  border-radius:15px;
+  padding:30px;
+  box-shadow:0 0 30px #00ff00, 0 0 60px #00ff00 inset;
+  color:#00ff00;
+  animation: neon-flicker 2s infinite;
+  overflow-y:auto;
+  max-height:90vh;
+}
+
+/* ===== HEADINGS ===== */
+.container h2 {
+  font-size:24px;
+  margin-bottom:12px;
+  text-shadow:0 0 5px #00ff00, 0 0 15px #00ff00, 0 0 25px #00ff00;
+}
+
+/* ===== PARAGRAPHS & LISTS ===== */
+.container p, .container li {
+  font-size:16px;
+  line-height:1.6;
+  margin-bottom:10px;
+  color:#00ff00;
+}
+.container ul { list-style: disc; padding-left:25px; margin-bottom:15px; }
+
+/* ===== IMAGES ===== */
+.container img {
+  width:100%;
+  max-height:180px;
+  object-fit:cover;
+  margin-bottom:15px;
+  border-radius:5px;
+  border:1px solid #00ff00;
+  box-shadow:0 0 20px #00ff00;
+}
+
+/* ===== NEON FLICKER ===== */
+@keyframes neon-flicker{
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    box-shadow:0 0 15px #00ff00, 0 0 30px #00ff00 inset;
+  }
+  20%, 22%, 24%, 55% {
+    box-shadow:0 0 35px #00ff00, 0 0 60px #00ff00 inset;
+  }
+}
+
+/* ===== HOVER EFFECT ===== */
+.container:hover {
+  transform: scale(1.02);
+  transition: transform 0.3s ease;
+}
+
+/* ===== SCROLLBAR ===== */
+.container::-webkit-scrollbar {
+  width:8px;
+}
+.container::-webkit-scrollbar-thumb {
+  background:#00ff00;
+  border-radius:5px;
+}
+</style>
+
+</body>
+</html>

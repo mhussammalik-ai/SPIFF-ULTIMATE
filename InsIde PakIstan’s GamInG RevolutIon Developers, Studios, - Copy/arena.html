@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPIFF ULTIMATE – Arena</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --neon:#2dffb3;
+  --neon-soft:rgba(45,255,179,0.4);
+  --bg-dark:#05080f;
+  --bg-mid:#070d1a;
+  --shadow-neon:0 0 20px var(--neon-soft), 0 0 50px var(--neon-soft);
+}
+
+/* ===== RESET ===== */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Orbitron',sans-serif;}
+html, body{width:100%;scroll-behavior:smooth;background:radial-gradient(circle at top left,#0b1a2f,var(--bg-dark)), linear-gradient(135deg,var(--bg-mid),#000);color:#fff;}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:10px;}
+::-webkit-scrollbar-track{background:#05080f;}
+::-webkit-scrollbar-thumb{background:linear-gradient(to bottom,#2dffb3,#3ddcff);border-radius:10px;}
+
+/* ===== NAVBAR ===== */
+nav{
+  position:fixed; top:0; left:0; width:100%; height:80px;
+  background:linear-gradient(90deg,#050912,#070c16,#050912);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 40px; z-index:999; box-shadow:0 0 25px var(--neon-soft); backdrop-filter:blur(6px);
+}
+
+.logo-link{color:var(--neon); font-size:28px; font-weight:800; letter-spacing:3px; text-decoration:none; text-shadow:var(--shadow-neon);}
+
+.nav-menu{list-style:none; display:flex; gap:36px;}
+.nav-menu a{text-decoration:none; color:rgba(255,255,255,.7); font-size:14px; letter-spacing:1px; transition:.3s;}
+.nav-menu a:hover, .nav-menu a.active{color:var(--neon); text-shadow:0 0 10px var(--neon-soft);}
+
+/* ===== HAMBURGER ===== */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 20px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.hamburger span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background: var(--neon);
+  border-radius: 3px;
+  transition: all 0.4s ease;
+}
+
+/* ===== MOBILE NAV ===== */
+@media(max-width:992px){
+  .hamburger { display:flex; }
+
+  .nav-menu {
+    position: absolute;
+    top: 80px;
+    right: 0;
+    flex-direction: column;
+    width: 220px;
+    background: #050912;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.4s ease;
+    border-left: 1px solid var(--neon-soft);
+    border-bottom: 1px solid var(--neon-soft);
+  }
+
+  .nav-menu.active { max-height: 500px; }
+
+  .nav-menu li { margin: 15px 0; text-align:center; }
+}
+
+/* Hamburger animation when active */
+.hamburger.active span:nth-child(1){ transform: rotate(45deg) translate(5px,5px); }
+.hamburger.active span:nth-child(2){ opacity: 0; }
+.hamburger.active span:nth-child(3){ transform: rotate(-45deg) translate(5px,-5px); }
+
+/* ===== ARENA SECTION ===== */
+.game-section{
+  min-height:100vh; padding:140px 40px 80px;
+  background: linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.85)), url('https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1470&q=80');
+  background-size:cover; background-position:center;
+}
+
+.arena-header{text-align:center; margin-bottom:60px;}
+.arena-header h1{font-size:64px; letter-spacing:5px; color:var(--neon-soft); text-shadow:0 0 15px var(--neon-soft),0 0 45px rgba(45,255,179,.25);}
+.subtitle{margin-top:12px; letter-spacing:3px; color:rgba(255,255,255,.65);}
+
+/* GRID CARDS */
+.arena-layout{
+  max-width:1100px; margin:auto; display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:40px;
+}
+
+.arena-card{
+  background:rgba(5,8,15,.75); border:1px solid rgba(255,255,255,.08);
+  padding:30px; border-radius:18px; backdrop-filter:blur(10px); transition:.4s ease;
+  position:relative; overflow:hidden;
+}
+
+.arena-card::before{
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(120deg,transparent,var(--neon-soft),transparent);
+  opacity:0; animation:scan 4s infinite;
+}
+
+.arena-card h3{color:var(--neon); margin-bottom:15px;}
+.arena-card p{line-height:1.7; color:rgba(255,255,255,.75);}
+.arena-card:hover{transform:translateY(-14px); box-shadow:0 0 40px rgba(45,255,179,.35);}
+
+@keyframes scan{0%{opacity:0} 50%{opacity:.35} 100%{opacity:0}}
+
+/* UNIVERSAL RESPONSIVE */
+img, video{max-width:100%; height:auto;}
+section, div, nav{width:100%;}
+
+@media(max-width:768px){
+  .game-section{padding:100px 20px 40px;}
+  .arena-header h1{font-size:36px; letter-spacing:3px;}
+  .subtitle{font-size:13px;}
+  .arena-layout{gap:25px;}
+  .arena-card{padding:22px;}
+}
+
+@media(max-width:480px){
+  .arena-header h1{font-size:30px;}
+  .arena-card h3{font-size:18px;}
+  .arena-card p{font-size:14px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="index.html" class="logo-link">SPIFF ULTIMATE</a>
+  <ul class="nav-menu">
+    <li><a href="nexus.html">Nexus</a></li>
+    <li><a href="vault.html">Vault</a></li>
+    <li><a href="arena.html" class="active">Arena</a></li>
+    <li><a href="questline.html">Questline</a></li>
+    <li><a href="echoes.html">Echoes</a></li>
+    <li><a href="pulse.html">Pulse</a></li>
+    <li><a href="signa.html">Signa</a></li>
+  </ul>
+  <div class="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</nav>
+
+<!-- ARENA SECTION -->
+<section id="arena" class="game-section">
+  <div class="arena-header">
+    <h1>ARENA</h1>
+    <p class="subtitle">WHERE CHAMPIONS ARE FORGED</p>
+  </div>
+
+  <div class="arena-layout">
+    <div class="arena-card">
+      <h3>Competitive Battles</h3>
+      <p>High-intensity combat where players face real opponents in ranked and unranked modes built for mastery.</p>
+    </div>
+
+    <div class="arena-card">
+      <h3>Skill-Based Matchmaking</h3>
+      <p>Advanced systems pair players by rank, strategy, and performance to ensure fair competition.</p>
+    </div>
+
+    <div class="arena-card">
+      <h3>Live Events</h3>
+      <p>Seasonal events introduce exclusive rewards, limited modes, and global leaderboards.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+/* Hamburger toggle */
+const hamburger = document.querySelector('.hamburger');
+const navMenu = document.querySelector('.nav-menu');
+
+hamburger.addEventListener('click', () => {
+  navMenu.classList.toggle('active');
+  hamburger.classList.toggle('active');
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Echoes – Signal Archive</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="./170ba712-048d-4b28-9853-f7a60df06289-md.jpeg">
+
+
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo-link">SPIFF ULTIMATE</a>
+  <ul class="nav-menu">
+    <li><a href="nexus.html">Nexus</a></li>
+    <li><a href="vault.html">Vault</a></li>
+    <li><a href="arena.html">Arena</a></li>
+    <li><a href="questline.html">Questline</a></li>
+    <li><a href="echoes.html" class="active">Echoes</a></li>
+    <li><a href="pulse.html">Pulse</a></li>
+    <li><a href="signa.html">Signa</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<section class="echoes-header">
+  <h1>ECHOES</h1>
+  <p>SIGNALS • BLOG • PULSE ARCHIVE</p>
+</section>
+
+<section class="feed">
+  <div class="signal">
+    <h3>📡 Signal Detected: City Aftermath</h3>
+    <span>PULSE / STORY LOG</span>
+    <p>The district survived, but the echoes remain. Player choices reshaped alliances and fractured old systems.</p>
+  </div>
+
+  <div class="signal">
+    <h3>🧠 Developer Transmission #014</h3>
+    <span>DEV LOG</span>
+    <p>Narrative paths were designed to collapse into emotional consequences, not just endings.</p>
+  </div>
+
+  <div class="signal">
+    <h3>🎮 Community Echo</h3>
+    <span>PLAYER VOICE</span>
+    <p>“That final mission changed how I saw the whole story.”</p>
+  </div>
+</section>
+
+<section class="archive">
+  <h2>ARCHIVE</h2>
+  <div class="archive-grid">
+    <div class="archive-item"><h4>Story Log #001</h4><p>Initial encounter and branching paths.</p></div>
+    <div class="archive-item"><h4>Pulse Update</h4><p>Upcoming quest expansions.</p></div>
+    <div class="archive-item"><h4>Developer Note</h4><p>Why player choice matters.</p></div>
+    <div class="archive-item"><h4>Community Signal</h4><p>Top theories from players.</p></div>
+  </div>
+</section>
+
+
+<style>
+:root{
+  --neon:#2dffb3;
+  --neon-soft:rgba(45,255,179,0.4);
+  --bg-dark:#05080f;
+  --bg-mid:#070d1a;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:#05080f}
+::-webkit-scrollbar-thumb{
+  background:linear-gradient(to bottom,#2dffb3,#3ddcff);
+  border-radius:10px
+}
+
+/* RESET */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Orbitron",sans-serif;
+}
+
+/* BODY */
+body{
+  background:
+    radial-gradient(circle at top left,#0b1a2f,var(--bg-dark)),
+    linear-gradient(135deg,var(--bg-mid),#000);
+  color:#fff;
+  overflow-x:hidden;
+}
+
+/* NAVBAR */
+nav{
+  position:fixed;
+  top:0;left:0;
+  width:100%;
+  height:80px;
+  background:linear-gradient(90deg,#050912,#070c16,#050912);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 40px;
+  z-index:999;
+  box-shadow:0 0 25px rgba(45,255,179,.15);
+  backdrop-filter:blur(6px);
+}
+
+.logo-link{
+  font-size:28px;
+  font-weight:800;
+  letter-spacing:3px;
+  color:var(--neon);
+  text-decoration:none;
+  text-shadow:0 0 18px var(--neon-soft);
+}
+
+.nav-menu{
+  list-style:none;
+  display:flex;
+  gap:36px;
+}
+
+.nav-menu a{
+  text-decoration:none;
+  color:rgba(255,255,255,.7);
+  font-size:14px;
+  letter-spacing:1px;
+  transition:.3s;
+}
+
+.nav-menu a:hover,
+.nav-menu a.active{
+  color:var(--neon);
+  text-shadow:0 0 10px var(--neon-soft);
+}
+
+/* HAMBURGER */
+.hamburger{
+  display:none;
+  flex-direction:column;
+  gap:5px;
+  cursor:pointer;
+}
+
+.hamburger span{
+  width:26px;
+  height:3px;
+  background:var(--neon);
+  border-radius:3px;
+}
+
+@media(max-width:768px){
+  .nav-menu{
+    position:absolute;
+    top:80px;
+    right:0;
+    background:#05080f;
+    flex-direction:column;
+    width:220px;
+    padding:20px;
+    display:none;
+    border-left:2px solid var(--neon);
+  }
+  .nav-menu.active{display:flex}
+  .hamburger{display:flex}
+}
+
+/* HEADER */
+.echoes-header{
+  height:70vh;
+  padding-top:80px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+.echoes-header h1{
+  font-size:72px;
+  color:var(--neon-soft);
+  letter-spacing:4px;
+  text-shadow:
+    0 0 12px var(--neon-soft),
+    0 0 40px rgba(45,255,179,.25);
+  animation:glitch 2.5s infinite;
+}
+
+.echoes-header p{
+  margin-top:14px;
+  letter-spacing:4px;
+  color:rgba(255,255,255,.6);
+}
+
+/* FEED */
+.feed{
+  max-width:900px;
+  margin:auto;
+  padding:80px 20px;
+}
+
+.signal{
+  background:rgba(5,8,15,.8);
+  border-left:3px solid var(--neon-soft);
+  padding:30px;
+  border-radius:16px;
+  margin-bottom:40px;
+  position:relative;
+  animation:fadeUp .8s ease;
+}
+
+.signal::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(120deg,transparent,var(--neon-soft),transparent);
+  opacity:0;
+  animation:scan 4s infinite;
+}
+
+.signal h3{
+  color:var(--neon);
+  margin-bottom:10px;
+}
+
+.signal span{
+  font-size:12px;
+  letter-spacing:2px;
+  color:rgba(255,255,255,.6);
+}
+
+.signal p{
+  margin-top:10px;
+  line-height:1.7;
+  color:rgba(255,255,255,.75);
+}
+
+/* ARCHIVE */
+.archive{
+  padding:80px 20px;
+  background:rgba(255,255,255,.02);
+}
+
+.archive h2{
+  text-align:center;
+  font-size:40px;
+  color:var(--neon-soft);
+  margin-bottom:40px;
+}
+
+.archive-grid{
+  max-width:1100px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:25px;
+}
+
+.archive-item{
+  background:rgba(5,8,15,.75);
+  border:1px solid rgba(255,255,255,.08);
+  padding:25px;
+  border-radius:14px;
+  transition:.4s;
+}
+
+.archive-item:hover{
+  transform:translateY(-8px);
+  box-shadow:0 0 35px rgba(45,255,179,.25);
+}
+
+.archive-item h4{
+  color:var(--neon);
+  margin-bottom:8px;
+}
+
+.archive-item p{
+  font-size:14px;
+  color:rgba(255,255,255,.7);
+}
+
+/* ANIMATIONS */
+@keyframes glitch{
+  0%{text-shadow:2px 2px var(--neon-soft)}
+  50%{text-shadow:-2px -2px var(--neon-soft)}
+  100%{text-shadow:2px -2px var(--neon-soft)}
+}
+
+@keyframes scan{
+  0%{opacity:0}
+  50%{opacity:.3}
+  100%{opacity:0}
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(30px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+@media(max-width:768px){
+  .echoes-header h1{font-size:46px}
+}
+</style>
+
+
+<script>
+function toggleMenu(){
+  document.querySelector('.nav-menu').classList.toggle('active');
+}
+</script>
+
+</body>
+</html>
